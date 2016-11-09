@@ -1,0 +1,42 @@
+# common
+- hosts: all
+  sudo: yes
+  gather_facts: no
+
+  tasks:
+
+  - name: remove git
+    apt: name=git state=removed update_cache=yes
+
+# common
+- hosts: all
+  sudo: yes
+  gather_facts: no
+
+  tasks:
+
+  - name: install git
+    apt: name=git state=installed update_cache=yes
+
+
+# web
+- hosts: web
+  sudo: yes
+
+  tasks:
+
+  - name: install nginx
+    apt: name=nginx state=removed
+
+
+# lb
+- hosts: lb
+  sudo: yes
+
+  tasks:
+
+  - name: Remove haproxy and socat
+    apt: pkg={{ item }} state=removed
+    with_items:
+    - haproxy
+    - socat
